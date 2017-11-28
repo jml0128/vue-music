@@ -1,0 +1,47 @@
+
+<div id="app">
+		<input name="keywords" value="海阔天空">
+		<button type="submit" id="get"></button>
+		<!-- <div>{{musicList}}</div> -->
+	<ul>
+		<li v-for="item in musicList" v-bind:data-id="item.artists[0].id">
+				<!-- <img v-bind:src="item.artists[0].img1v1Url"> -->
+				<p>歌曲名：{{item.name}}</p>
+				<p>演唱者：{{item.artists[0].name}}</p>
+				<p>专辑名：{{item.album.name}}</p>
+		</li>
+	</ul>
+</div>
+
+<script src="js/jquery.min.js"></script>
+
+<script src="js/vue.js"></script>
+<script>
+	
+	//获取歌曲，并将获取的数据返回
+	function getMusic(name){
+		var a = null;
+		$.ajax({
+		async:false,
+		url:'http://localhost:3000/search?keywords='+name,
+		success: function(data){
+			console.log(data.result.songs);
+			a = data.result.songs;
+		}
+		})
+		return a;
+	  }
+	  
+	var app = new Vue({
+	  el: '#app',
+	  data: {
+		message: 'cs',
+		musicList : []
+	  },
+	  methods: {},
+	  created: function(){
+		this.musicList = getMusic('海阔天空');
+	  }
+	})
+	
+</script>
