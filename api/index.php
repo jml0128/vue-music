@@ -9,18 +9,27 @@ $api = new MusicAPI();
 // $album_id = 18896;
 // $mv_id = 5341392;
 
+$type = $_POST['type'];
 
 
-//返回搜索结果
-//传入参数（搜索内容，返回的条数，偏移量, 类型）
-$keyword = $_POST['keyword'];
-$num = $_POST['num'];
-$page = $_POST['page'];
-if(!$keyword){
-	$keyword = '热门';
+if($type == 1){
+	//返回搜索结果
+	//传入参数（搜索内容，返回的条数，偏移量, 类型）
+	$keyword = $_POST['keyword'];
+	$num = $_POST['num'];
+	$page = $_POST['page'];
+	if(!$keyword){
+		$keyword = '热门';
+	}
+	$result = $api->search($keyword,$num,$page);
+	echo $result;
+}else if($type == 2){
+	//返回歌曲链接
+	$song_id = $_POST['song_id'];
+	$mp3url = $api->mp3url($song_id);
+	print_r($mp3url);
 }
-$result = $api->search($keyword,$num,$page);
-echo $result;
+
 
 //返回歌曲详情
 // $detail = $api->detail($song_id);
